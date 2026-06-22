@@ -1,3 +1,6 @@
+import os
+from openai import OpenAI
+
 INSTRUCTIONS = '''
 Your task is to answer questions from the course participants
 based on the provided context.
@@ -20,14 +23,20 @@ class RAGBase:
     def __init__(
         self,
         index,
-        llm_client,
+        llm_client=None,
         instructions=INSTRUCTIONS,
         prompt_template=PROMPT_TEMPLATE,
         course='llm-zoomcamp',
         model='llama-3.3-70b-versatile'
     ):
         self.index = index
-        self.llm_client = llm_client
+        if llm_client is None:
+            self.llm_client = OpenAI(
+            api_key=os.getenv('GROQ_API_KEY'),
+            base_url="https://api.groq.com/openai/v1"
+            )
+        else:
+            self.llm_client = llm_client
         self.instructions = instructions
         self.course = course
         self.prompt_template = prompt_template
@@ -80,3 +89,4 @@ class RAGBase:
         prompt = self.build_prompt(query, search_results)
         answer = self.llm(prompt)
         return answer
+    
