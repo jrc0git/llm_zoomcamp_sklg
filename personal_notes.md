@@ -1,1 +1,2 @@
 - Explore uv documentation.
+- Check elasticsearch supplementary material (https://github.com/DataTalksClub/llm-zoomcamp/blob/main/cohorts/2025/01-intro/elastic-search.md)
